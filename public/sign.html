@@ -1,0 +1,39 @@
+<canvas id="canvas" width="300" height="200" style="border:1px solid"></canvas>
+<br>
+<button onclick="save()">서명 완료</button>
+
+<script>
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+
+let drawing = false;
+
+canvas.addEventListener('touchstart', () => drawing = true);
+canvas.addEventListener('touchend', () => drawing = false);
+canvas.addEventListener('touchmove', draw);
+
+function draw(e) {
+    if (!drawing) return;
+    const rect = canvas.getBoundingClientRect();
+    const touch = e.touches[0];
+
+    ctx.lineTo(touch.clientX - rect.left, touch.clientY - rect.top);
+    ctx.stroke();
+}
+
+const urlParams = new URLSearchParams(window.location.search);
+const name = urlParams.get('name');
+
+function save() {
+    const data = canvas.toDataURL();
+
+    fetch('/sign', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({
+            name: name,
+            signature: data
+        })
+    }).then(()=>alert('서명 완료'));
+}
+</script>

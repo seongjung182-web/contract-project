@@ -1,0 +1,28 @@
+<h1>근로계약서</h1>
+
+<p>성명: {{name}}</p>
+<p>주민등록번호: {{rrn}}</p>
+<p>주소: {{address}}</p>
+<p>핸드폰번호: {{phone}}</p>
+
+<p>현장명: {{site}}</p>
+<p>직종: {{job}}</p>
+
+<p>기본일급: {{daily_pay}}원</p>
+
+<p>급여 지급 계좌: {{bank}} {{account}}</p>
+<p>※ 본인 명의 계좌로 한다.</p>
+
+<br><br>
+
+<p>근로자 서명:</p>
+<img src="{{signature}}" width="200"/>
+
+<br><br>
+<button onclick="goSign()">서명하러 가기</button>
+
+<script>
+function goSign() {
+    location.href = "/sign.html?name={{name}}";
+}
+</script>
